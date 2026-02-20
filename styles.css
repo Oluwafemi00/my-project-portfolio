@@ -306,3 +306,24 @@ h1 > img {
   width: 2.5rem;
   animation: bounce 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
 }
+
+nav h1 {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  #contact-form {
+    max-width: 100%;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    margin-right: 30%;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    padding-right: 1rem;
+  }
+}
