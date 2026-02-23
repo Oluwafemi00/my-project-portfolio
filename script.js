@@ -91,6 +91,7 @@ async function loadBlogPost(fileName) {
             <article class="markdown-body">
                 ${marked.parse(text)}
             </article>
+            <button onclick="renderPostList()" class="back-btn">← Back to Blog</button>
         `;
   } catch (err) {
     blogContainer.innerHTML = `<p>Error loading post: ${err.message}</p>`;
