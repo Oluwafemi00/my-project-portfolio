@@ -1,329 +1,452 @@
-Light Mode Variables :root {
-  --bg-color: #fff;
-  --text-color: #1a1a1a;
-  --accent-color: #007bff;
+/* --- Global Variables & Elite Palette --- */
+:root {
+  --bg: #050505;
+  --surface: #0c0c0c;
+  --accent: #c5a059;
+  --text-main: #ffffff;
+  --text-dim: #71717a;
+  --border: rgba(255, 255, 255, 0.08);
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --code-bg: #111111;
 }
 
-/* Dark Mode Variables */
-body.dark-theme {
-  --bg-color: #121212;
-  --text-color: #e0e0e0;
-  --accent-color: #0ea5e9;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none !important;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: 0.3s ease;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Container Layout */
-#repo-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 0;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.section {
+  padding: 6rem 0;
+}
+.italic-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+}
+.eyebrow {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  margin-bottom: 3rem;
+  text-align: left;
 }
 
-/* The Card - Glassmorphism Effect */
-.repo-card {
-  background: rgba(255, 255, 255, 0.05); /* Very faint white */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px); /* The "Glass" blur */
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* ==========================================================================
+   CURSOR SYSTEM (Bulletproof Version)
+   ========================================================================== */
+
+/* 1. Only hide the real cursor if the user has a precise mouse */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
-/* Dark Mode specific card tweaks */
-body.dark-theme .repo-card {
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-/* Hover State */
-.repo-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent-color);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.repo-card h3 {
-  margin-top: 0;
-  color: var(--accent-color);
-  font-size: 1.25rem;
-}
-
-.repo-card p {
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-/* Action Link Styles */
-.repo-link {
-  display: inline-block;
-  margin-top: 1rem;
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: bold;
-  font-size: 0.85rem;
-  border-bottom: 2px solid var(--accent-color);
-  align-self: flex-start;
-}
-
-.blog-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.blog-item {
-  padding: 1rem;
-  border-left: 4px solid var(--accent-color);
-  background: rgba(255, 255, 255, 0.03);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.blog-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  padding-left: 1.5rem;
-}
-
-.blog-item span {
-  font-size: 0.8rem;
-  opacity: 0.6;
-}
-
-/* Markdown Styling */
-.markdown-body h1 {
-  border-bottom: 1px solid var(--accent-color);
-  padding-bottom: 10px;
-}
-.markdown-body code {
-  background: #333;
-  padding: 2px 5px;
-  border-radius: 4px;
-}
-
-.back-btn {
-  background: var(--accent-color);
-  color: rgb(0, 0, 0);
-  border: 1[x] black solid;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 2rem;
-}
-
-/* The background track */
-#progress-container {
+/* 2. The Custom Cursor Elements */
+.cursor-dot,
+.cursor-outline {
+  pointer-events: none;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 4px;
-  background: transparent; /* Invisible background */
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 99999; /* Max z-index to ensure it sits above everything */
+  opacity: 0; /* Hidden until mouse moves */
+  transition: opacity 0.3s ease;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent);
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--accent);
+}
+
+/* 3. Disable custom cursor entirely on mobile/touch screens */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-outline {
+    display: none !important;
+  }
+}
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
   z-index: 1000;
-}
-
-/* The actual filling bar */
-#progress-bar {
-  height: 100%;
-  background: var(--accent-color);
   width: 0%;
-  transition: width 0.1s ease-out;
-  box-shadow: 0 0 10px var(--accent-color);
+  transition: width 0.1s;
 }
 
-#contact-form {
-  max-width: 60%;
-  margin: 2rem 0;
-  padding: 2rem;
-
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
+/* --- Navbar --- */
+.navbar {
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 5, 5, 0.8);
+}
+.logo-text {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+}
+.nav-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+.nav-link:hover {
+  color: var(--accent);
 }
 
-#contact {
-  margin-left: 25%;
-  text-align: center;
+/* --- Bento Grid (For Repos & Blog List) --- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.bento-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+.bento-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  background: rgba(197, 160, 89, 0.02);
+}
+.bento-item h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--text-main);
+}
+.bento-item p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+.tag {
+  color: var(--accent);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  display: block;
+}
+.repo-link {
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-#contact > h2 {
-  margin-right: 35%;
+/* --- Blog Markdown Styling (Elite Docs Look) --- */
+.blog-article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 8px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+.btn-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
-.form-group {
+.markdown-body h1 {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.markdown-body h2 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+.markdown-body p {
   margin-bottom: 1.5rem;
+  color: #d4d4d8;
+}
+.markdown-body ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  color: var(--text-dim);
+}
+.markdown-body code {
+  background: var(--code-bg);
+  color: var(--accent);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  border: 1px solid var(--border);
+}
+.markdown-body pre {
+  background: var(--code-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+.markdown-body pre code {
+  border: none;
+  padding: 0;
+  color: #e2e8f0;
 }
 
+/* --- Contact Form --- */
+#contact-form {
+  max-width: 900px;
+}
+.form-row {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+.form-row input {
+  flex: 1;
+  width: 100%;
+}
 input,
 textarea {
-  width: 95%;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: var(--text-color);
-  font-size: 1rem;
-  outline: none;
-}
-
-input:focus,
-textarea:focus {
-  border-color: var(--accent-color);
-}
-
-#form-submit {
-  background: var(--accent-color);
-  color: rgb(0, 0, 0);
-  border: 1[x] black solid;
-  padding: 12px 30px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: opacity 0.3s;
-}
-
-#form-submit:hover {
-  opacity: 0.8;
-}
-
-/* Default Dark Mode/Root */
-:root {
-  --code-bg: #1e1e1e;
-  --code-text: #d4d4d4;
-}
-
-/* Light Mode Overrides */
-body.light-mode {
-  --code-bg: #f5f5f5;
-  --code-text: #24292e;
-}
-
-/*  Markdown container */
-.markdown-body pre {
-  background-color: var(--code-bg);
-  color: var(--code-text);
-  padding: 16px;
-  border-radius: 8px;
-  overflow: auto;
-}
-
-.markdown-body code {
-  font-family: "Courier New", Courier, monospace;
-}
-
-.markdown-body span {
-  background-color: var(--code-bg);
-  color: var(--code-text) !important;
-}
-
-code {
-  background-color: #333; /* Dark gray background */
-  color: #f8f8f2; /* Off-white text */
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-/* Light Mode Override */
-body.light-mode code {
-  background-color: #e0e0e0; /* Light gray background */
-  color: #24292e; /* Dark text */
-}
-
-/* Button Styling */
-#theme-toggle {
-  cursor: pointer;
   background: transparent;
   border: none;
-  padding: 10px;
-  color: var(--text-color);
-  transition: transform 0.3s ease;
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  display: block;
+  width: 100%;
+  transition: 0.4s;
+}
+input:focus,
+textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+  transform: translateY(-2px);
+}
+::placeholder {
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
 }
 
-#theme-toggle:hover {
-  transform: scale(1.1);
+.btn-premium {
+  background: var(--accent);
+  color: #000;
+  padding: 1rem 2.5rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+  transition: var(--transition);
+  border: none;
+}
+.btn-premium:hover {
+  box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
 }
 
-/* Initial state (Dark Mode / Sun) */
-.sun-rays {
-  transition:
-    opacity 0.3s ease,
-    transform 0.5s ease;
+/* --- Footer & Loader --- */
+.footer {
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+}
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #27c93f;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 10px #27c93f;
+  animation: pulse 2s infinite;
+  margin-right: 5px;
+}
+
+.terminal-loader {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+/* --- Mobile Toggle Base Styles --- */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1001; /* Must be above the sliding menu */
+}
+
+.mobile-toggle span {
+  width: 25px;
+  height: 2px;
+  background: var(--accent);
+  transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center;
 }
 
-.main-circle {
-  transition:
-    r 0.3s ease,
-    fill 0.3s ease;
-}
-
-/* Light Mode state (Moon) */
-body.light-mode .sun-rays {
-  opacity: 0;
-  transform: rotate(45deg);
-}
-
-body.light-mode .main-circle {
-  fill: currentColor;
-}
-
-h1 > img {
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-20px);
-  }
-  60% {
-    transform: translateY(-10px);
-  }
-}
-
-.logo {
-  width: 2.5rem;
-  animation: bounce 2s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
-}
-
-nav h1 {
-  font-size: 1.5rem;
-}
-
+/* --- Elite Mobile Responsiveness --- */
 @media (max-width: 768px) {
-  body {
-    font-size: 14px;
-  }
-  #contact-form {
-    max-width: 100%;
-    margin: 2rem 0;
-    padding: 1.5rem;
-    margin-right: 30%;
+  /* Activate the hamburger menu */
+  .mobile-toggle {
+    display: flex;
   }
 
-  .form-group {
-    margin-bottom: 1rem;
-    padding-right: 1rem;
+  /* Convert standard nav into a slide-out drawer */
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen by default */
+    width: 80%;
+    height: 100vh;
+    background: rgba(12, 12, 12, 0.98);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border-left: 1px solid var(--border);
+    z-index: 1000;
+  }
+
+  /* The class JS will toggle to slide it in */
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: 1.5rem; /* Larger touch targets for mobile */
+    margin: 0;
+  }
+
+  /* Form & Content Adjustments */
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .section-title {
+    font-size: 2.5rem;
+  }
+  .blog-article {
+    padding: 2rem;
+  }
+  .markdown-body h1 {
+    font-size: 2rem;
+  }
+  .footer-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 }
