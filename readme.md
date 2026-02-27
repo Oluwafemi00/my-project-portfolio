@@ -18,7 +18,7 @@ https://oluwafemi00.github.io/my-project-portfolio/
 
 ---
 
-## 👨‍💻 About
+## About
 
 This is my personal software development portfolio where I showcase the projects I have built as a developer.
 
@@ -65,7 +65,7 @@ This portfolio focuses on **practical projects and production-style architecture
 
 ---
 
-## 📦 Featured Projects
+## Featured Projects
 
 ### 🛒 SwiftCart — Full Stack PERN Application
 
@@ -137,7 +137,7 @@ https://[oluwafemi00.github.io/dev-portfolio/](https://oluwafemi00.github.io/dev
 
 ---
 
-## ⭐ Future Updates
+## Future Updates
 
 - More full-stack projects
 - Authentication systems
