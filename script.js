@@ -40,14 +40,29 @@ window.addEventListener("scroll", () => {
 });
 
 // ==========================================
-// 2. GITHUB API INTEGRATION (Bento Format)
+// 2. GITHUB API INTEGRATION (With Rate Limit Handling)
 // ==========================================
 async function fetchRepos(username) {
   const container = document.getElementById("repo-container");
   try {
+    // Explicitly requesting API v3 to ensure standard response headers
     const response = await fetch(
       `https://api.github.com/users/${username}/repos?sort=updated`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+        },
+      },
     );
+
+    // Intercept rate limiting before it fails parsing
+    if (response.status === 403 || response.status === 429) {
+      throw new Error("GitHub API rate limit exceeded. Data stream paused.");
+    }
+
+    if (!response.ok) throw new Error("Failed to connect to GitHub Gateway.");
+
     const repos = await response.json();
 
     container.innerHTML = repos
@@ -65,9 +80,22 @@ async function fetchRepos(username) {
       )
       .join("");
 
-    applyMagneticEffect(); // Re-apply interactions to new elements
+    if (typeof applyMagneticEffect === "function") applyMagneticEffect();
   } catch (error) {
-    container.innerHTML = `<p style="color: #ff5f56;">[ERROR] Failed to fetch remote repositories.</p>`;
+    // Elite Fallback UI: What the user sees if the API blocks us
+    container.innerHTML = `
+            <div class="bento-item" style="border-color: #ff5f56; grid-column: 1 / -1;">
+                <div>
+                    <span class="tag" style="color: #ff5f56;">[SYSTEM_WARNING]</span>
+                    <h3 style="color: #ff5f56;">Telemetry Paused</h3>
+                    <p>${error.message.includes("rate limit") ? error.message : "CORS/Network error preventing live repository fetch."}</p>
+                    <p style="font-size: 0.85rem;">While the API cools down, you can view my architecture directly on GitHub.</p>
+                </div>
+                <a href="https://github.com/${username}" class="btn-premium magnetic" target="_blank" style="align-self: flex-start; margin-top: 1rem; background: #ff5f56;">
+                    Access GitHub Directly
+                </a>
+            </div>
+        `;
   }
 }
 
