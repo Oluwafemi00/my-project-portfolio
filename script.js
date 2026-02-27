@@ -1,8 +1,5 @@
 // ==========================================
 // 1. CURSOR & PROGRESS BAR SYSTEM
-
-const { title } = require("process");
-
 // ==========================================
 const dot = document.querySelector(".cursor-dot");
 const outline = document.querySelector(".cursor-outline");

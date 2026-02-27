@@ -1,4 +1,4 @@
-# 🚀 My Developer Portfolio
+# My Developer Portfolio
 
 <p align="center">
   <b>Full Stack Developer | JavaScript | Node.js | PostgreSQL</b>
