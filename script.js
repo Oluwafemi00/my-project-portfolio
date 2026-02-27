@@ -1,5 +1,8 @@
 // ==========================================
 // 1. CURSOR & PROGRESS BAR SYSTEM
+
+const { title } = require("process");
+
 // ==========================================
 const dot = document.querySelector(".cursor-dot");
 const outline = document.querySelector(".cursor-outline");
@@ -79,6 +82,11 @@ const blogPosts = [
     title: "Building a Vanilla JS Portfolio",
     date: "2026-02-17",
     file: "post1",
+  },
+  {
+    title: "Building a Github Project Website",
+    date: "2026-02-27",
+    file: "post2",
   },
 ];
 const blogContainer = document.getElementById("blog-content");
