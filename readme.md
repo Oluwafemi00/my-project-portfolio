@@ -13,10 +13,6 @@
   </a>
 </p>
 
-![Portfolio](https://img.shields.io/badge/Portfolio-Live-success)
-![GitHub](https://img.shields.io/badge/GitHub-Repository-black)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-
 🔗 **Live Portfolio**  
 https://oluwafemi00.github.io/my-project-portfolio/
 
@@ -115,8 +111,6 @@ https://oluwafemi00.github.io/counter-App/
 - Project showcase
 - Live demos
 - GitHub links
-
----
 
 ---
 
