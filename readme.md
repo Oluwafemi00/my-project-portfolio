@@ -1,149 +1,113 @@
-<center># My Developer Portfolio</center>
+# 🗄️ System Repositories & Engineering Logs
 
-<p align="center">
-  <b>Full Stack Developer | JavaScript | Node.js | PostgreSQL</b>
-</p>
+[![Live Deployment](https://img.shields.io/badge/Live_Deployment-Operational-27c93f?style=for-the-badge)](https://oluwafemi00.github.io/my-project-portfolio/)
+[![Architecture](https://img.shields.io/badge/Architecture-Vanilla_JS-c5a059?style=for-the-badge)]()
+[![Performance](https://img.shields.io/badge/Lighthouse-91%25-success?style=for-the-badge)]()
 
-<p align="center">
-  <a href="https://oluwafemi00.github.io/my-project-portfolio/">
-    <img src="https://img.shields.io/badge/Live-Portfolio-success?style=for-the-badge">
-  </a>
-  <a href="https://github.com/oluwafemi00">
-    <img src="https://img.shields.io/badge/GitHub-Profile-black?style=for-the-badge">
-  </a>
-</p>
+A dynamic GitHub project hub and engineering log system built entirely with **Vanilla JavaScript and native browser APIs.**
 
-🔗 **Live Portfolio**  
-https://oluwafemi00.github.io/my-project-portfolio/
+Instead of hardcoding projects or using a static site generator, this system pulls live repository data directly from GitHub and renders it dynamically in the browser.
 
----
+The goal was simple:
 
-## About
+**One source of truth — GitHub.**
 
-This is my personal software development portfolio where I showcase the projects I have built as a developer.
+Whenever I update a repository, the portfolio updates automatically.
 
-The portfolio contains real-world applications demonstrating my skills in:
+No duplication.
+No manual edits.
 
-- Frontend Development
-- Full Stack Development
-- REST API Development
-- Database Design
-- Problem Solving
-
-This portfolio focuses on **practical projects and production-style architecture.**
+Just the platform.
 
 ---
 
-## 🛠 Tech Stack
+## Architecture
 
-### Frontend
+This system was built to avoid heavy frameworks and static-site tooling. Everything runs directly in the browser with minimal dependencies.
+
+It serves as both:
+
+- A live project hub
+- A technical documentation system
+- A performance-focused frontend architecture
+
+The focus was on **speed, simplicity, and control.**
+
+---
+
+## Core Systems
+
+### Live Repository Data
+
+The portfolio connects directly to the GitHub API and renders repositories dynamically when the page loads.
+
+This keeps everything synchronized automatically without maintaining multiple project lists.
+
+---
+
+### Rate Limit Fallback System
+
+GitHub limits unauthenticated API requests to **60 requests per hour per IP address.**
+
+If that limit is reached, GitHub returns a `403` response which can appear as a CORS error in the browser.
+
+Instead of letting the interface break, the system detects the failure and switches to a controlled **[SYSTEM WARNING]** state.
+
+This keeps the user experience stable even when the API is unavailable.
+
+---
+
+### Dynamic Engineering Logs
+
+Engineering logs are written in Markdown and loaded dynamically.
+
+The browser fetches raw `.md` files and converts them into styled HTML documents on demand.
+
+This makes it easy to add new logs without rebuilding the site.
+
+---
+
+### Stable Layout Rendering
+
+Dynamic content containers use strict `min-height` reservations to prevent layout shifting while data loads.
+
+This keeps the interface visually stable during asynchronous operations.
+
+Cumulative Layout Shift (CLS) is kept at **0.00**.
+
+---
+
+## 📊 Performance Metrics
+
+This system was designed to respect the **Critical Rendering Path** and minimize main thread work.
+
+Performance was a core requirement from the beginning.
+
+- **Total Blocking Time:** `10ms`
+- **Cumulative Layout Shift:** `0.00`
+- **Lighthouse Mobile Score:** `91 / 100`
+
+---
+
+## 💻 Tech Stack
+
+**Structure**
 
 - HTML5
+
+**Styling**
+
 - CSS3
-- Tailwindcss
-- JavaScript
-- Responsive Design
-- React.js
+- CSS Variables
+- Bento-style layout
 
-### Backend
+**Logic**
 
-- Node.js
-- Express.js
+- Vanilla JavaScript (ES6+)
+- Async/Await
+- Fetch API
+- Event Delegation
 
-### Database
+**Parsing**
 
-- PostgreSQL
-- MongoDB
-
-### Tools
-
-- Git
-- GitHub
-- GitHub Pages
-- VS Code
-- Postman
-
----
-
-## Featured Projects
-
-### 🛒 SwiftCart — Full Stack PERN Application
-
-Full-stack e-commerce and delivery platform built using:
-
-- PostgreSQL
-- Express.js
-- React
-- Node.js
-
-Features:
-
-- Role-based dashboards
-- REST APIs
-- Structured database
-- Order management workflow
-- Production-style backend logic
-
----
-
-### 📊 Counter App
-
-A practical counting application designed for tracking data.
-
-Features:
-
-- LocalStorage persistence
-- CSV export
-- Clean interface
-- Real-world usability
-
-Live Demo:
-
-https://oluwafemi00.github.io/counter-App/
-
----
-
-## ✨ Portfolio Features
-
-- Clean UI
-- Responsive design
-- Fast loading
-- Project showcase
-- Live demos
-- GitHub links
-
----
-
-## 🎯 Developer Goals
-
-I am currently focused on:
-
-- Becoming a professional software engineer
-- Building real-world systems
-- Mastering full-stack development
-- Writing clean maintainable code
-
----
-
-## 📬 Contact
-
-GitHub:
-
-https://github.com/oluwafemi00
-
-Portfolio:
-
-https://[oluwafemi00.github.io/dev-portfolio/](https://oluwafemi00.github.io/dev-portfolio/)
-
----
-
-## Future Updates
-
-- More full-stack projects
-- Authentication systems
-- API integrations
-- Advanced UI systems
-
----
-
-⭐ If you like this project, consider starring the repository.
+- Marked.js (Deferred Loading)
