@@ -1,4 +1,4 @@
-# My Developer Portfolio
+<center># My Developer Portfolio</center>
 
 <p align="center">
   <b>Full Stack Developer | JavaScript | Node.js | PostgreSQL</b>
