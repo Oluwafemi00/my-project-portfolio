@@ -529,3 +529,19 @@ textarea:focus {
     gap: 20px;
   }
 }
+
+/* --- Performance: Eliminate Cumulative Layout Shift (CLS) --- */
+/* Reserves space for dynamic content before the API responds */
+#repo-container {
+  min-height: 800px;
+}
+
+#blog-content {
+  min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  #repo-container {
+    min-height: 1200px; /* Mobile grids stack, so they need more vertical space */
+  }
+}
