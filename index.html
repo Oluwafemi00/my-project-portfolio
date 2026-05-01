@@ -3,32 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects | S. Oladele</title>
-
-    <meta name="title" content="Femi Sodiq Oladele | Frontend Engineer" />
+    <title>Repositories | S. Oladele</title>
     <meta
       name="description"
-      content="Frontend Engineer specializing in React and JavaScript, building responsive, user-focused web applications with clean UI and real-world functionality."
-    />
-    <meta
-      name="keywords"
-      content="Frontend Engineer, React Developer, JavaScript, UI Developer, Responsive Design, Femi Oladele"
+      content="Live GitHub repositories and development logs from Femi Sodiq Oladele — Frontend Engineer."
     />
     <meta name="author" content="Femi Sodiq Oladele" />
-    <meta name="theme-color" content="#050505" />
-
+    <meta name="theme-color" content="#080808" />
     <link
       rel="icon"
       href="./image/codersrank-svgrepo-com.svg"
       type="image/svg+xml"
-    />
-    <link rel="stylesheet" href="styles.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap"
-      rel="stylesheet"
     />
 
     <link
@@ -45,74 +30,134 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     /></noscript>
-  </head>
 
+    <link rel="stylesheet" href="styles.css" />
+  </head>
   <body>
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
     <div class="progress-bar" id="progress-bar"></div>
 
-    <header class="navbar">
+    <header class="navbar" id="navbar">
       <div class="logo-area">
-        <a href="index.html" style="text-decoration: none">
-          <span class="logo-text"
-            >S. Oladele
-            <span style="color: var(--text-dim); font-size: 0.8rem"
-              >/ REPOSITORIES</span
-            ></span
-          >
+        <a href="index.html" class="logo-link">
+          <span class="logo-text">S. Oladele</span>
         </a>
+        <span class="logo-breadcrumb">/ REPOSITORIES</span>
       </div>
 
       <div class="mobile-toggle" id="mobile-menu-trigger">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </div>
 
       <nav class="nav-menu">
         <a href="#projects" class="nav-link">Repositories</a>
-        <a href="#blog" class="nav-link">Development Logs</a>
-        <a href="#contact" class="nav-link">Contact Me</a>
+        <a href="#blog" class="nav-link">Dev Logs</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
+
+      <div class="nav-signal desktop-only">
+        <span class="signal-dot" id="signal-dot"></span>
+        <span class="signal-text" id="signal-text">Connecting...</span>
+      </div>
     </header>
 
     <main>
-      <section id="projects" class="section" style="padding-top: 12rem">
+      <!-- HERO STRIP -->
+      <section class="page-hero">
         <div class="container">
-          <span class="eyebrow">Open Source</span>
-          <h2 class="section-title">
-            Master <span class="italic-serif">Repositories</span>
-          </h2>
-          <div id="repo-container" class="bento-grid">
-            <div class="terminal-loader">
-              <p class="command">> fetching_repositories...</p>
+          <div class="page-hero-inner">
+            <div class="page-hero-text">
+              <span class="eyebrow">Live Feed · GitHub API</span>
+              <h1 class="page-title">
+                Master <span class="italic-serif">Repositories</span>
+              </h1>
+              <p class="page-subtitle">
+                All public repositories sorted by last commit — fetched live
+                from the GitHub API.
+              </p>
+            </div>
+            <div class="hero-stats" id="hero-stats">
+              <div class="stat-block">
+                <span class="stat-num" id="stat-repos">—</span>
+                <span class="stat-label">Repositories</span>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-block">
+                <span class="stat-num" id="stat-stars">—</span>
+                <span class="stat-label">Stars</span>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-block">
+                <span class="stat-num" id="stat-langs">—</span>
+                <span class="stat-label">Languages</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="blog" class="section">
+      <!-- FILTER BAR -->
+      <div class="filter-bar" id="filter-bar" style="display: none">
+        <div class="container">
+          <div class="filter-inner">
+            <div class="filter-chips" id="filter-chips">
+              <button class="chip active" data-lang="all">All</button>
+            </div>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="repo-search"
+                placeholder="Search repositories..."
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPOS -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div id="repo-container" class="repo-list">
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+            <div class="repo-skeleton"></div>
+          </div>
+          <div id="repo-empty" class="repo-empty" style="display: none">
+            <i class="fas fa-folder-open"></i>
+            <p>No repositories match your search.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEV LOGS -->
+      <section id="blog" class="section blog-section">
         <div class="container">
           <span class="eyebrow">Technical Writing</span>
           <h2 class="section-title">
             Development <span class="italic-serif">Logs</span>
           </h2>
           <div id="blog-content">
-            <div class="terminal-loader">
-              <p class="command">> indexing_logs...</p>
+            <div class="log-loader">
+              <span class="log-spinner"></span>
+              <span>Indexing logs...</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="contact" class="section contact">
-        <div class="container contact-content">
+      <!-- CONTACT -->
+      <section id="contact" class="section contact-section">
+        <div class="container contact-inner">
           <span class="eyebrow">Secure Channel</span>
-          <h2 class="statement" style="font-size: 3rem">
+          <h2 class="section-title">
             Initiate <span class="italic-serif">Connection</span>
           </h2>
-
           <form
             id="contact-form"
             action="https://formspree.io/f/xwvnbydy"
@@ -129,7 +174,7 @@
             </div>
             <textarea
               name="message"
-              placeholder="Project details and architectural requirements..."
+              placeholder="Project details or architectural requirements..."
               rows="4"
               required
             ></textarea>
@@ -143,9 +188,12 @@
 
     <footer class="footer">
       <div class="container footer-grid">
-        <p>&copy; 2026 Femi Sodiq Oladele. Built for performance.</p>
+        <p class="footer-copy">
+          &copy; 2026 Femi Sodiq Oladele. Built for performance.
+        </p>
         <div class="footer-status">
-          <span class="status-dot"></span> System Health: 99.9%
+          <span class="status-dot"></span>
+          <span>System Health: 99.9%</span>
         </div>
       </div>
     </footer>
